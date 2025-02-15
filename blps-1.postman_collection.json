@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "107dad70-6ce2-4852-8af9-f660a99f234f",
+		"name": "blps-1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30295503"
+	},
+	"item": [
+		{
+			"name": "register_user",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"alex\",\n    \"last_name\": \"mem\",\n    \"balance\": 999\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "publish_product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-User-Id",
+						"value": "3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"1dfdffs\",\n    \"description\":\"asdasdasd\",\n    \"price\":123.4,\n    \"quantity\":3,\n    \"type\":\"CLOTHES\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/product",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_all_products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/product",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_filtered_products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"1\",\n    \"price\": 123.4,\n    \"quantity\": 32,\n    \"type\": \"CLOTHES\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/product/filtered?name=1&type=CLOTHES",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"filtered"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "1"
+						},
+						{
+							"key": "price",
+							"value": "123.1",
+							"disabled": true
+						},
+						{
+							"key": "quantity",
+							"value": "32",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "CLOTHES"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-User-Id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"city\": \"sss\",\n    \"street\": \"dddd\",\n    \"products\": {\"5\":\"123\", \"9\":\"1\"}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/order",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

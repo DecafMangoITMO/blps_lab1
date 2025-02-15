@@ -1,5 +1,7 @@
 package com.alwxdecaf.blps_lab.order.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -19,7 +21,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public OrderDto createOrder(@Valid @RequestBody OrderDto orderDto, @RequestHeader(name = "X-User-Id") long userId){
+    public List<Long> createOrder(@Valid @RequestBody OrderDto orderDto, @RequestHeader(name = "X-User-Id") long userId){
         return orderService.create(orderDto, userId);
     }
 }

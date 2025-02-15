@@ -28,8 +28,8 @@ public class ProductController {
         return productService.publish(publishProductDto, customerId);
     }
 
-    @PostMapping("/filtered")
-    public List<ProductDto> getFilteredProducts(@Valid @RequestBody FiltersDto filters) {
+    @GetMapping("/filtered")
+    public List<ProductDto> getFilteredProducts(@Valid @ModelAttribute FiltersDto filters) {
         return productService.getFilteredProducts(filters);
     }
 

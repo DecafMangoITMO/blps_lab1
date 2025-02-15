@@ -18,13 +18,10 @@ CREATE TABLE IF NOT EXISTS products (
 CREATE TABLE IF NOT EXISTS u_order (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users (id),
+    customer_id INTEGER REFERENCES users (id),
+    quantity INTEGER NOT NULL CHECK ( quantity > 0 ),
+    product_id INTEGER REFERENCES products (id),
     city VARCHAR(64) NOT NULL,
     street VARCHAR(64) NOT NULL,
     status VARCHAR(32) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS order_products(
-    order_id INTEGER REFERENCES u_order (id),
-    product_id INTEGER REFERENCES products (id),
-    PRIMARY KEY (order_id, product_id) 
 );

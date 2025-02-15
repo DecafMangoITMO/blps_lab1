@@ -47,16 +47,19 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "order_products", 
-        joinColumns = @JoinColumn(name = "order_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id") 
-    )
-    private List<Product> products;
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private User customerId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product productId;
 
 }

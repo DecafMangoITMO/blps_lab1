@@ -1,5 +1,7 @@
 package com.alwxdecaf.blps_lab.order.service;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -22,32 +24,66 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    public OrderDto create(OrderDto orderDto, long userId){
+    public List<Long> create(OrderDto orderDto, long userId){
+
+        // Products in order
+        HashMap<Long, Integer> prodAndCount = orderDto.getProducts();
+        // Info about products in repo
+        List<Product> products = prodAndCount.keySet().stream().map(x -> productRepository.findById(x)
+            .orElseThrow(() -> new RuntimeException(String.format("Product with id %d not find", x)))).toList();
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
-        List<Product> products = orderDto.getProducts().stream().map(x -> productRepository.findById(x)
-            .orElseThrow(() -> new RuntimeException(String.format("Product with id %d not find", x)))).toList();
         
-        if (products.stream().anyMatch(product -> product.getQuantity() == 0)){
-            OrderMapper.toDto(orderRepository.save(OrderMapper.toEntity(orderDto, user, products, OrderStatus.REJECT)));
+        double total = user.getBalance() - products.stream().mapToDouble(prod -> prod.getPrice() * prodAndCount.get(prod.getId())).sum();
+
+        if(total < 0){
+            products.stream().forEach(
+            prod -> orderRepository.save(
+                OrderMapper.toEntity(
+                    orderDto, 
+                    user, 
+                    prod.getCustomer(),
+                    OrderStatus.REJECT,
+                    prodAndCount.get(prod.getId()),
+                    prod)));
+            throw new RuntimeException("You dont have enouth money");
+        }
+
+        if (products.stream().anyMatch(product -> product.getQuantity() < prodAndCount.get(product.getId()))){
+            products.stream().forEach(
+            prod -> orderRepository.save(
+                OrderMapper.toEntity(
+                    orderDto, 
+                    user, 
+                    prod.getCustomer(),
+                    OrderStatus.REJECT,
+                    prodAndCount.get(prod.getId()),
+                    prod)));
             throw new RuntimeException("Some products are out of stock");
         }
 
-        double total = user.getBalance() - products.stream().mapToDouble(Product::getPrice).sum();
+        List<Long> orders = new LinkedList<>();
 
-        if(total < 0){
-            OrderMapper.toDto(orderRepository.save(OrderMapper.toEntity(orderDto, user, products, OrderStatus.REJECT)));
-            throw new RuntimeException("You dont have enouth money");
-        } 
+        products.stream().forEach(
+            prod -> orders.add(orderRepository.save(
+                    OrderMapper.toEntity(
+                        orderDto, 
+                        user, 
+                        prod.getCustomer(),
+                        OrderStatus.PENDING,
+                        prodAndCount.get(prod.getId()),
+                        prod))
+                    .getId())
+        );
+
 
         user.setBalance(total);
-        products.stream().forEach(prod -> prod.setQuantity(prod.getQuantity()-1));
+        products.stream().forEach(prod -> prod.setQuantity(prod.getQuantity() - prodAndCount.get(prod.getId())));
 
         productRepository.saveAll(products);
         userRepository.save(user);
         
-        
-        return OrderMapper.toDto(orderRepository.save(OrderMapper.toEntity(orderDto, user, products, OrderStatus.APPROVED)));
+        return orders;
     }
 }

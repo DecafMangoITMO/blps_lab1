@@ -1,6 +1,6 @@
 package com.alwxdecaf.blps_lab.order.dto;
 
-import java.util.List;
+import java.util.HashMap;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,6 +20,6 @@ public class OrderDto {
     private String street;
 
     @NotEmpty(message = "products can not be empty")
-    private List<Long> products;
+    private HashMap<Long, Integer> products;
 
 }
