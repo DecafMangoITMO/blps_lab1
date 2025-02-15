@@ -1,5 +1,6 @@
 package com.alwxdecaf.blps_lab.product.controller;
 
+import com.alwxdecaf.blps_lab.product.dto.FiltersDto;
 import com.alwxdecaf.blps_lab.product.dto.ProductDto;
 import com.alwxdecaf.blps_lab.product.dto.PublishProductDto;
 import com.alwxdecaf.blps_lab.product.service.ProductService;
@@ -25,6 +26,11 @@ public class ProductController {
     public ProductDto publish(@Valid @RequestBody PublishProductDto publishProductDto,
                               @RequestHeader(name = "X-User-Id") long customerId) {
         return productService.publish(publishProductDto, customerId);
+    }
+
+    @PostMapping("/filtered")
+    public List<ProductDto> getFilteredProducts(@RequestBody FiltersDto filters) {
+        return productService.getFilteredProducts(filters);
     }
 
 }
