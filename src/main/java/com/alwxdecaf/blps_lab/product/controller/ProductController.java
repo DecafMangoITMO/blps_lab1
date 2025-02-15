@@ -29,7 +29,7 @@ public class ProductController {
     }
 
     @PostMapping("/filtered")
-    public List<ProductDto> getFilteredProducts(@RequestBody FiltersDto filters) {
+    public List<ProductDto> getFilteredProducts(@Valid @RequestBody FiltersDto filters) {
         return productService.getFilteredProducts(filters);
     }
 
