@@ -14,13 +14,13 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE " +
-        "(:name is null OR p.name LIKE %:name%) AND" +
-        "(:price is null OR p.price = :price) AND" +
-        "(:quantity is null OR p.quantity = :quantity) AND" +
-        "(:type is null OR p.type = :type)")
-    List<Product> findByFilters(@Param("name") String name, 
-                                @Param("price") Double price, 
-                                @Param("quantity") Integer quantity, 
+            "(:name is null OR p.name LIKE %:name%) AND" +
+            "(:min_price is null OR p.price >= :min_price) AND" +
+            "(:max_price is null OR p.price <= :max_price) AND" +
+            "(:type is null OR p.type = :type)")
+    List<Product> findByFilters(@Param("name") String name,
+                                @Param("min_price") Double minPrice,
+                                @Param("max_price") Double maxPrice,
                                 @Param("type") ProductType type);
 
 }
