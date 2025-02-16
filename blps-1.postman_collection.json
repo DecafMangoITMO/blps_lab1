@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9f88e731-5524-41fe-8e45-4d84dc732c04",
+		"_postman_id": "107dad70-6ce2-4852-8af9-f660a99f234f",
 		"name": "blps-1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30295503"
@@ -43,7 +43,7 @@
 				"header": [
 					{
 						"key": "X-User-Id",
-						"value": "1",
+						"value": "3",
 						"type": "text"
 					}
 				],
@@ -89,8 +89,11 @@
 		},
 		{
 			"name": "get_filtered_products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -102,7 +105,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/product/filtered",
+					"raw": "localhost:8080/product/filtered?name=1&type=CLOTHES",
 					"host": [
 						"localhost"
 					],
@@ -110,6 +113,26 @@
 					"path": [
 						"product",
 						"filtered"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "1"
+						},
+						{
+							"key": "price",
+							"value": "123.1",
+							"disabled": true
+						},
+						{
+							"key": "quantity",
+							"value": "32",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "CLOTHES"
+						}
 					]
 				}
 			},
@@ -128,7 +151,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"city\": \"sss\",\n    \"street\": \"dddd\",\n    \"products\": [1, 2, 3]\n}",
+					"raw": "{\n    \"city\": \"sss\",\n    \"street\": \"dddd\",\n    \"products\": {\"5\":\"123\", \"9\":\"1\"}\n}",
 					"options": {
 						"raw": {
 							"language": "json"

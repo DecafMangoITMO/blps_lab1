@@ -11,6 +11,17 @@ CREATE TABLE IF NOT EXISTS products (
     description VARCHAR(256) NOT NULL,
     price DOUBLE PRECISION NOT NULL CHECK ( price >= 0 ),
     quantity INTEGER NOT NULL CHECK ( quantity >= 0 ),
-    type  VARCHAR(32) NOT NULL,
+    type VARCHAR(32) NOT NULL,
     customer_id INTEGER REFERENCES users (id)
+);
+
+CREATE TABLE IF NOT EXISTS u_order (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users (id),
+    customer_id INTEGER REFERENCES users (id),
+    quantity INTEGER NOT NULL CHECK ( quantity > 0 ),
+    product_id INTEGER REFERENCES products (id),
+    city VARCHAR(64) NOT NULL,
+    street VARCHAR(64) NOT NULL,
+    status VARCHAR(32) NOT NULL
 );
