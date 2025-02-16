@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "u_order")
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -32,7 +32,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private User customerId;
+    private User customer;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -40,6 +40,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product productId;
+    private Product product;
 
 }

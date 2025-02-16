@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS products (
     customer_id INTEGER REFERENCES users (id)
 );
 
-CREATE TABLE IF NOT EXISTS u_order (
+CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users (id),
     customer_id INTEGER REFERENCES users (id),

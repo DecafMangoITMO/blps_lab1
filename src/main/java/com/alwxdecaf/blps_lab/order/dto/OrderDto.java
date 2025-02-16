@@ -1,11 +1,8 @@
 package com.alwxdecaf.blps_lab.order.dto;
 
-import java.util.HashMap;
-
+import com.alwxdecaf.blps_lab.order.model.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,13 +10,22 @@ import lombok.Data;
 @Builder(toBuilder = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderDto {
-    @NotBlank(message = "city can not be blank")
-    private String city;
 
-    @NotBlank(message = "street can not be blank")
-    private String street;
+    private final long id;
 
-    @NotEmpty(message = "products can not be empty")
-    private HashMap<Long, Integer> products;
+    private final String city;
+
+    private final OrderStatus status;
+
+    private final int quantity;
+
+    @JsonProperty("customer_id")
+    private final long customerId;
+
+    @JsonProperty("user_id")
+    private final long userId;
+
+    @JsonProperty("product_id")
+    private final long productId;
 
 }

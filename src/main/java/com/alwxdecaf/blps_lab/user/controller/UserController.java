@@ -26,4 +26,9 @@ public class UserController {
         return userService.register(registerUserDto);
     }
 
+    @PatchMapping("/{user_id}")
+    public UserDto setBalance(@PathVariable("user_id") long userId, @RequestParam("balance") double balance) {
+        return userService.setBalance(userId, balance);
+    }
+
 }
