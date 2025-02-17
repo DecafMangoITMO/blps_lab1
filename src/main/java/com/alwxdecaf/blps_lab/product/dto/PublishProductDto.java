@@ -22,7 +22,7 @@ public class PublishProductDto {
     @PositiveOrZero(message = "price can not be negative")
     private final double price;
 
-    @PositiveOrZero(message = "price can not be negative")
+    @PositiveOrZero(message = "quantity can not be negative")
     private final int quantity;
 
     @NotNull
