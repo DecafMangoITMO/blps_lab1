@@ -11,6 +11,8 @@ import com.alwxdecaf.blps_lab.product.model.Product;
 import com.alwxdecaf.blps_lab.user.dao.UserRepository;
 import com.alwxdecaf.blps_lab.user.model.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
