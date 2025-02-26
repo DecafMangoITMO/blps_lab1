@@ -15,15 +15,16 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     public List<UserDto> getAll() {
         return userRepository.findAll().stream()
-                .map(UserMapper::toDto)
+                .map(userMapper::toDto)
                 .toList();
     }
 
     public UserDto register(RegisterUserDto registerUserDto) {
-        return UserMapper.toDto(userRepository.save(UserMapper.toEntity(registerUserDto)));
+        return userMapper.toDto(userRepository.save(userMapper.toEntity(registerUserDto)));
     }
 
     public UserDto setBalance(long userId, double balance) {
@@ -31,7 +32,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         user.setBalance(balance);
-        return UserMapper.toDto(userRepository.save(user));
+        return userMapper.toDto(userRepository.save(user));
     }
 
 }
