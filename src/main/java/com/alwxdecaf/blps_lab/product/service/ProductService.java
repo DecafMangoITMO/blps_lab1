@@ -23,7 +23,7 @@ public class ProductService {
     public List<ProductDto> getAll(String name, Double minPrice, Double maxPrice, String typeStr) {
         ProductType type;
         try {
-            type = typeStr == null ? null : ProductType.valueOf(typeStr);
+            type = typeStr == null ? null : ProductType.valueOf(typeStr.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Invalid product type: " + typeStr);
         }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name=blps_lab
+    name: blps_lab
 
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -18,3 +18,4 @@ spring:
   sql:
     init:
       mode: always
+

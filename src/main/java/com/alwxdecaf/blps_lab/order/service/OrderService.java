@@ -78,15 +78,15 @@ public class OrderService {
         return ordersDto;
     }
 
-    public OrderDto answer(long orderId, String orderStatusStr, long customerId) {
-        if (orderStatusStr == null)
-            throw new RuntimeException("order_status can not be null");
-        OrderStatus orderStatus;
-        try {
-            orderStatus = OrderStatus.valueOf(orderStatusStr);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid order status: " + orderStatusStr);
-        }
+    public OrderDto answer(long orderId, String action, long customerId) {
+        if (action == null)
+            throw new RuntimeException("action can not be null");
+        OrderStatus orderStatus = switch (action.toLowerCase()) {
+            case "approve" -> OrderStatus.APPROVED;
+            case "reject" -> OrderStatus.REJECTED;
+            case "pending" -> OrderStatus.PENDING;
+            default -> throw new RuntimeException("Unknown action: " + action);
+        };
 
         // todo Во второй лабораторной это убрать
         User customer = userRepository.findById(customerId)

@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/order")
+@RequestMapping("/api/orders")
 @Slf4j
 public class OrderController {
 
@@ -31,12 +31,12 @@ public class OrderController {
         return orderService.create(createOrderDto, userId);
     }
 
-    @PatchMapping("/{order_id}")
+    @PatchMapping("/{order_id}/{action}")
     public OrderDto answer(
-            @PathVariable long orderId,
-            @RequestParam(value = "order_status", required = false) String orderStatus,
+            @PathVariable(name = "order_id") long orderId,
+            @PathVariable(name = "action") String action,
             @RequestHeader(name = "X-User-Id") long customerId) {
-        log.info("Answer with status to order with id {} by customer with id {}", orderStatus, orderId, customerId);
-        return orderService.answer(orderId, orderStatus, customerId);
+        log.info("Answer with status {} to order with id {} by customer with id {}", action, orderId, customerId);
+        return orderService.answer(orderId, action, customerId);
     }
 }
